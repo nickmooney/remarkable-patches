@@ -4,7 +4,7 @@ This is a set of firmware patches for the reMarkable 1 tablet. They are all in `
 
 Current patches:
 
-* Disable file uploading and keep downloading (if you don't want your notes to leave your reMarkable
+* Disable file uploading and keep downloading (if you don't want your notes to leave your reMarkable)
 * Bind the web interface to `wlan0` instead of `usb0`
 
 ## Patches
@@ -13,7 +13,7 @@ Current patches:
 
 When the reMarkable software is queueing files to be uploaded, it checks if the device is online. This patch causes that check to fail always, so that files are never uploaded from the device to the reMarkable cloud. Using the cloud to sync documents from your computer to the reMarkable will still work.
 
-*Warning:* This patch will be undone by a firmware upgrade, and documents will start syncing with the reMarkable cloud again.
+**Warning:** This patch will be undone by a firmware upgrade, and documents will start syncing with the reMarkable cloud again.
 
 You can find this patch in `xochitl-2.1.1.3-no-upload.bspatch`.
 
