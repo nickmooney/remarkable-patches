@@ -3,8 +3,9 @@
 This is a set of firmware patches for the reMarkable 1 tablet. They are all in `bspatch` format. They are organized by firmware version (currently only 2.1.1.3 is supported).
 
 Current patches:
-    * Disable file uploading and keep downloading (if you don't want your notes to leave your reMarkable
-    * Bind the web interface to `wlan0` instead of `usb0`
+
+* Disable file uploading and keep downloading (if you don't want your notes to leave your reMarkable
+* Bind the web interface to `wlan0` instead of `usb0`
 
 ## Patches
 
