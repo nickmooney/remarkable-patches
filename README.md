@@ -9,6 +9,8 @@ Current patches:
 * Bind the web interface to `wlan0` (Wi-Fi IP) instead of `usb0`
 * Bind the web interface to `lo` (localhost) instead of `usb0`
 
+You may also want to take a look at @FiloSottile's [reput](https://github.com/FiloSottile/mostly-harmless/tree/master/reput) project. `reput` allows you to synchronize content to your reMarkable tablet without using the reMarkable cloud service, and will automatically apply the localhost and web UI invincibility patches.
+
 ## Patches
 
 ### Disable file upload
@@ -84,5 +86,7 @@ To upload a patched binary:
 $ bspatch xochitl xochitl-no-upload xochitl-2.1.1.3-no-upload.bspatch
 $ bspatch xochitl-no-upload xochitl-no-upload-wlan0 xochitl-2.1.1.3-wlan0.bspatch
 ```
+
+Note that the `wlan0` and `lo` patches probably won't play nicely with each other, as they patch the same locations in the binary. The rest should not interfere with each other.
 
 Feel free to file a GitHub issue for any other questions!
