@@ -1,6 +1,6 @@
 # reMarkable Firmware Patches
 
-This is a set of firmware patches for the reMarkable 1 tablet. They are all in `bspatch` format. They are organized by firmware version (currently only 2.1.1.3 is supported).
+This is a set of firmware patches for the reMarkable 1 tablet. They are all in `bspatch` format. They are organized by firmware version (currently versions 2.1.1.3 and 2.2.0.48 are supported).
 
 Current patches:
 
@@ -19,15 +19,17 @@ When the reMarkable software is queueing files to be uploaded, it checks if the 
 
 **Warning:** This patch will be undone by a firmware upgrade, and documents will start syncing with the reMarkable cloud again.
 
-You can find this patch in `xochitl-2.1.1.3-no-upload.bspatch`.
+You can find this patch in `xochitl-w.x.y.z-no-upload.bspatch`.
 
 ### WebUI invincibility
+
+**Note** This seems not to be needed if you use the `localhost` patch.
 
 This patch keeps the reMarkable web UI enabled across reboots. When this patch is first applied, you will have to toggle the web interface on. If you want to disable it again, you must toggle the Web UI switch off and then reboot the device.
 
 I can confirm that this works consistently if you bind the web interface to `lo`. If you bind it to `wlan0` or keep the default behavior of binding to `usb0`, the web interface may not come up automatically, as `wlan0` and `usb0` both lack assigned IP addresses on boot.
 
-You can find this patch in `xochitl-2.1.1.3-lo.bspatch`.
+You can find this patch in `xochitl-w.x.y.z-lo.bspatch`.
 
 ### Bind web interface to wlan0 or lo
 
@@ -37,13 +39,13 @@ Since the update to reMarkable v2.0, the web interface will no longer activate i
 
 This patch causes the web interface to bind to `wlan0` instead, meaning you should be able to access it over a wireless network. Note that the UI will still say to navigate to the USB IP, but this is erroneous.
 
-You can find this patch in `xochitl-2.1.1.3-wlan0.bspatch`.
+You can find this patch in `xochitl-w.x.y.z-wlan0.bspatch`.
 
 #### lo
 
 This patch causes the web interface to bind to localhost instead, so you can access it via an SSH tunnel (e.g. `ssh -L 8080:localhost:80 root@remarkable`). I can confirm that this patch plays nicely with the Web UI invincibility patch.
 
-You can find this patch in `xochitl-2.1.1.3-lo.bspatch`.
+You can find this patch in `xochitl-w.x.y.z-lo.bspatch`.
 
 ## Applying a patch
 
@@ -62,7 +64,7 @@ scp remarkable:/usr/bin/xochitl /path/to/local/dir/xochitl
 To apply the "bind web interface to wlan0" patch, for example:
 
 ```
-bspatch xochitl xochitl-wlan0 xochitl-2.1.1.3-wlan0.bspatch
+bspatch xochitl xochitl-wlan0 xochitl-w.x.y.z-wlan0.bspatch
 ```
 
 ### Uploading the patched binary
@@ -77,14 +79,16 @@ To upload a patched binary:
 * On your computer: `scp xochitl-wlan0 remarkable:/usr/bin/xochitl`
 * On your reMarkable: `systemctl restart xochitl`
 
+Note that the `xochitl` binary must have execute permissions! The default permissions for the file are `755`, and I've put my reMarkable into a boot loop before by accidentally messing those permissions up.
+
 # FAQ
 
 * **Q**: Can I apply more than one patch?
 * **A**: Yes, you just have to do them in tandem. I can't guarantee every patch will play nice, but you should be able to do something like the following:
 
 ```
-$ bspatch xochitl xochitl-no-upload xochitl-2.1.1.3-no-upload.bspatch
-$ bspatch xochitl-no-upload xochitl-no-upload-wlan0 xochitl-2.1.1.3-wlan0.bspatch
+$ bspatch xochitl xochitl-no-upload xochitl-w.x.y.z-no-upload.bspatch
+$ bspatch xochitl-no-upload xochitl-no-upload-wlan0 xochitl-w.x.y.z-wlan0.bspatch
 ```
 
 Note that the `wlan0` and `lo` patches probably won't play nicely with each other, as they patch the same locations in the binary. The rest should not interfere with each other.
