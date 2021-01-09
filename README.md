@@ -1,13 +1,15 @@
 # reMarkable Firmware Patches
 
-This is a set of firmware patches for the reMarkable 1 tablet. They are all in `bspatch` format. They are organized by firmware version (currently versions 2.1.1.3 and 2.2.0.48 are supported).
+This is a set of firmware patches for the reMarkable 1 tablet. They are all in `bspatch` format. They are organized by firmware version (currently versions 2.1.1.3, 2.2.0.48, and 2.5.0.27 are supported).
 
 Current patches:
 
-* Disable file uploading and keep downloading (if you don't want your notes to leave your reMarkable)
-* Make the web UI "invincible" (i.e. if you enable the UI, it will persist through reboots)
-* Bind the web interface to `wlan0` (Wi-Fi IP) instead of `usb0`
 * Bind the web interface to `lo` (localhost) instead of `usb0`
+* Make the web UI "invincible" (i.e. if you enable the UI, it will persist through reboots)
+* ~~Disable file uploading and keep downloading (if you don't want your notes to leave your reMarkable)~~
+* ~~Bind the web interface to `wlan0` (Wi-Fi IP) instead of `usb0`~~
+
+(I'm not updating the ~~strikethrough~~ patches -- I'm only really interested in binding to localhost and keeping the Web UI persistent.)
 
 You may also want to take a look at @FiloSottile's [reput](https://github.com/FiloSottile/mostly-harmless/tree/master/reput) project. `reput` allows you to synchronize content to your reMarkable tablet without using the reMarkable cloud service, and will automatically apply the localhost and web UI invincibility patches.
 
@@ -23,7 +25,7 @@ You can find this patch in `xochitl-w.x.y.z-no-upload.bspatch`.
 
 ### WebUI invincibility
 
-**Note** This seems not to be needed if you use the `localhost` patch.
+**Note** Since version 2.2.0.48, you don't need a separate invincibility patch.
 
 This patch keeps the reMarkable web UI enabled across reboots. When this patch is first applied, you will have to toggle the web interface on. If you want to disable it again, you must toggle the Web UI switch off and then reboot the device.
 
@@ -43,7 +45,9 @@ You can find this patch in `xochitl-w.x.y.z-wlan0.bspatch`.
 
 #### lo
 
-This patch causes the web interface to bind to localhost instead, so you can access it via an SSH tunnel (e.g. `ssh -L 8080:localhost:80 root@remarkable`). I can confirm that this patch plays nicely with the Web UI invincibility patch.
+This patch causes the web interface to bind to localhost instead, so you can access it via an SSH tunnel (e.g. `ssh -L 8080:localhost:80 root@remarkable`).
+
+**Note**: As of 2.5.0.27 (and probably other 2.5 firmwares), you need to plug in the USB cable *once* to toggle the web interface on after applying the patch. After this is done, the web interface should persist through reboots.
 
 You can find this patch in `xochitl-w.x.y.z-lo.bspatch`.
 
